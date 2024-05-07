@@ -2,6 +2,7 @@ import re
 import sys
 
 def validate_title(title):
+    print("The title is:", title)
     prefix_pattern = r'^(build|chore|ci|docs|feat|fix|perf|refactor|style|test|sample)[:\s].+'
     max_length = 50
     
