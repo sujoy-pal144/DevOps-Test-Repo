@@ -1,18 +1,39 @@
-name: PR Title Validation
+#name: PR Title Validation
+
+#on:
+  #pull_request:
+    #types: [opened, reopened, edited]
+
+#jobs:
+  #validate_title:
+    #runs-on: ubuntu-latest
+    
+    #steps:
+    #- name: Checkout code
+      #uses: actions/checkout@v3
+      
+    #- name: Run validation script
+      #env:
+        #PR_TITLE: ${{ github.event.pull_request.title }}
+      #run: python validate_title.py "$PR_TITLE"
+
+name: "PR Title Validation"
 
 on:
-  pull_request:
-    types: [opened, reopened, edited]
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - labeled
+      - unlabeled
 
 jobs:
-  validate_title:
+  check:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Run validation script
-      env:
-        PR_TITLE: ${{ github.event.pull_request.title }}
-      run: python validate_title.py "$PR_TITLE"
+      - uses: thehanimo/pr-title-checker@v1.4.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pass_on_octokit_error: false
+          configuration_path: .github/pr-title-checker-config.json

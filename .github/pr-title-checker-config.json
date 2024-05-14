@@ -1,0 +1,18 @@
+{
+    "LABEL": {
+      "name": "title needs formatting",
+      "color": "EEEEEE"
+    },
+    "CHECKS": {
+      "prefixes": ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "style", "test", "sample"],
+      "regexp": "^(build|chore|ci|docs|feat|fix|perf|refactor|style|test|sample): [A-Z][a-zA-Z0-9 ]{0,48}$",
+      "regexpFlags": "i",
+      "ignoreLabels" : ["dont-check-PRs-with-this-label", "meta"]
+    },
+    "MESSAGES": {
+      "success": "All OK",
+      "failure": "Failing CI test: PR title must start with one of the valid prefixes ('build', 'chore', 'ci', 'docs', 'feat', 'fix', 'perf', 'refactor', 'style', 'test', 'sample') followed by a colon or a space and a title, and not exceed 50 characters.",
+      "notice": ""
+    }
+}
+  
