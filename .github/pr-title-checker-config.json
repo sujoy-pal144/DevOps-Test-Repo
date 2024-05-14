@@ -5,7 +5,7 @@
     },
     "CHECKS": {
       "prefixes": ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "style", "test", "sample"],
-      "regexp": "^(build|chore|ci|docs|feat|fix|perf|refactor|style|test|sample): [A-Z][a-zA-Z0-9 ]{0,48}$",
+      "regexp": "^(build|chore|ci|docs|feat|fix|perf|refactor|style|test|sample):\\s[a-zA-Z0-9 ]{0,49}$",
       "regexpFlags": "i",
       "ignoreLabels" : ["dont-check-PRs-with-this-label", "meta"]
     },

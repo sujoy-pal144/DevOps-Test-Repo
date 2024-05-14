@@ -17,10 +17,10 @@
         #PR_TITLE: ${{ github.event.pull_request.title }}
       #run: python validate_title.py "$PR_TITLE"
 
-name: "PR Title Validation"
+name: "PR Title Checker"
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
