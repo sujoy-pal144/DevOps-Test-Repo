@@ -1,32 +1,13 @@
-#name: PR Title Validation
-
-#on:
-  #pull_request:
-    #types: [opened, reopened, edited]
-
-#jobs:
-  #validate_title:
-    #runs-on: ubuntu-latest
-    
-    #steps:
-    #- name: Checkout code
-      #uses: actions/checkout@v3
-      
-    #- name: Run validation script
-      #env:
-        #PR_TITLE: ${{ github.event.pull_request.title }}
-      #run: python validate_title.py "$PR_TITLE"
-
 name: "PR Title Checker"
-
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - edited
       - synchronize
       - labeled
       - unlabeled
+      - reopened
 
 jobs:
   check:
