@@ -13,27 +13,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-
       - name: Get PR Title
         id: get_pr_title
         run: |
-          echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
-
-      - name: Validate PR Title
-        run: |
-          PR_TITLE="${{ env.PR_TITLE }}"
-          echo "PR title: $PR_TITLE"
-          if [[ "$PR_TITLE" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|style|test|sample):\ [a-zA-Z0-9\ ]{0,50}$ ]]; then
-            echo "PR title is as per standards: $PR_TITLE"
-            echo "RESULT=success" >> $GITHUB_ENV
-          else
-            echo "PR title is not as per standards. PR title must start with one of the following prefixes: build, chore, ci, docs, feat, fix, perf, refactor, style, test, sample. PR title content must not exceed 50 characters. Your PR title was: $PR_TITLE"
-            echo "RESULT=failure" >> $GITHUB_ENV
-            exit 1
-          fi
-
-      - name: Set PR Title Check Result
-        if: env.RESULT == 'failure'
-        run: exit 1
+          echo "Checking PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
+      
+      - name: Check PR Title
+        uses: thehanimo/pr-title-checker@v1.4.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pass_on_octokit_error: false
+          configuration_path: .github/pr-title-checker-config.json
