@@ -18,10 +18,10 @@ jobs:
 
       - name: Get PR Title
         id: get_pr_title
-        run: echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
+        run: |
+          echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
 
       - name: Validate PR Title
-        id: validate_title
         run: |
           PR_TITLE="${{ env.PR_TITLE }}"
           echo "PR title: $PR_TITLE"
@@ -31,6 +31,7 @@ jobs:
           else
             echo "PR title is not as per standards. PR title must start with one of the following prefixes: build, chore, ci, docs, feat, fix, perf, refactor, style, test, sample. PR title content must not exceed 50 characters. Your PR title was: $PR_TITLE"
             echo "RESULT=failure" >> $GITHUB_ENV
+            exit 1
           fi
 
       - name: Set PR Title Check Result
