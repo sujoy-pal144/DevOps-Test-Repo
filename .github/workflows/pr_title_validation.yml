@@ -1,6 +1,6 @@
 name: "PR Title Checker"
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - edited
@@ -18,21 +18,21 @@ jobs:
 
       - name: Get PR Title
         id: get_pr_title
-        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
+        run: echo "PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
 
       - name: Validate PR Title
         id: validate_title
         run: |
-          PR_TITLE="${{ steps.get_pr_title.outputs.title }}"
+          PR_TITLE="${{ env.PR_TITLE }}"
           echo "PR title: $PR_TITLE"
           if [[ "$PR_TITLE" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|style|test|sample):\ [a-zA-Z0-9\ ]{0,50}$ ]]; then
             echo "PR title is as per standards: $PR_TITLE"
-            echo "::set-output name=result::success"
+            echo "RESULT=success" >> $GITHUB_ENV
           else
             echo "PR title is not as per standards. PR title must start with one of the following prefixes: build, chore, ci, docs, feat, fix, perf, refactor, style, test, sample. PR title content must not exceed 50 characters. Your PR title was: $PR_TITLE"
-            echo "::set-output name=result::failure"
+            echo "RESULT=failure" >> $GITHUB_ENV
           fi
 
       - name: Set PR Title Check Result
-        if: steps.validate_title.outputs.result == 'failure'
+        if: env.RESULT == 'failure'
         run: exit 1
