@@ -16,7 +16,7 @@ jobs:
       - name: Get PR Title
         id: get_pr_title
         run: |
-          echo "Checking PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
+          echo "Checking PR_TITLE = ${{ github.event.pull_request.title }}"
       
       - name: Check PR Title
         uses: thehanimo/pr-title-checker@v1.4.1
